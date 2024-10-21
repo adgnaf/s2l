@@ -1,0 +1,45 @@
+<> <= >= << >> = < > ( ) [ ] { } -> :: .. ; , . : ^ @ # _ | + - * /
+
+$+$ $-$ $*$ $/$ $mod$
+$=$ $<>$ $<$ $>$ $<=$ $>=$
+$@$ $times$ $and$ $or$ $xor$
+$land$ $lor$ $lxor$ $lsl$ $lsr$
++$ -$ not$ lnot$ reverse$
+
+
+abstract activate and assume automaton 
+bool
+case char clock const 
+default do
+else elsif emit end enum every
+flase fby final flatten float float32 float64 fold foldi foldw foldwi function guarantee group
+if imported initial int8 int16 int32 int64 integer is 
+land last let lnot lor lsl lsr lxor 
+make map mapfold mapfoldi mapfoldw mapfoldwi mapi mapw mapwi match merge mod node not numeric
+of onreset open or 
+package parameter pre private probe public 
+restart resume returns reverse 
+sensor sig signed specialize state synchro 
+tel then times transpose true type 
+uint8 uint16 uint32 uint64 unless unsigned until 
+var 
+when where with 
+xor 
+
+'variable 
+
+variable 
+
+0xdeadbeaf
+42
+42.42
+
+
+/*
+  multi
+  line
+  comments
+
+*/
+
+-- single line comments 

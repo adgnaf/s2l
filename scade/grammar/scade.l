@@ -19,12 +19,17 @@ FLOAT ({DIGIT10}+\.{DIGIT10}*|{DIGIT10}*\.{DIGIT10}+)
 TYPED_FLOAT {FLOAT}(_f32|_f64)
 
 LETTER (_|[a-z]|[A-Z])
+
 ALPHANUMERIC ({DIGIT10}|{LETTER})
+
 WORD {LETTER}{ALPHANUMERIC}*
+
 CHARACTER ({ALPHANUMERIC}|[ \!"\$#%&'\(\)\*\+,-\.\/:;_<=>\?@\[\]\\\^`\|\{\}~])
 
 CHAR '{CHARACTER}'
+
 ID {WORD}
+
 NAME '{WORD}
 
 PREFIXOP ("$+$"|"$-$"|"$*$"|"$/$"|"$mod$"|"$=$"|"$<>$"|"$<$"|"$>$"|"$<=$"|"$>=$"|"$@$"|"$times$"|"$and$"|"$or$"|"$xor$"|"$land$"|"$lor$"|"$lxor$"|"$lsl$"|"$lsr$"|"+$"|"-$"|"not$"|"lnot$"|"reverse$")
@@ -182,12 +187,13 @@ xor {
 }
 
 {CHAR} printf("CHAR: %s\n", yytext);
+
 {ID} printf("ID: %s\n", yytext);
+
 {NAME} printf("NAME: %s\n", yytext);
 
 
 "/*" { BEGIN(COMMENT); }
-
 <COMMENT>{
     \*"/" { BEGIN(INITIAL); } 
     .|\n 
@@ -196,6 +202,7 @@ xor {
 "--".* /* eat up single line comments */
 
 [ \t\r\n\f]+ /* eat up whitespace */
+
 . printf("Unrecognized character: %s\n", yytext);
 
 %%
