@@ -27,7 +27,7 @@ WORD {LETTER}{ALPHANUMERIC}*
 
 CHARACTER ({ALPHANUMERIC}|[ \!"\$#%&'\(\)\*\+,-\.\/:;_<=>\?@\[\]\\\^`\|\{\}~])
 
-CHAR '{CHARACTER}'
+CHAR ('{CHARACTER}'|'\\x{DIGIT16}{DIGIT16}')
 
 ID {WORD}
 
