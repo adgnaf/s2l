@@ -35,6 +35,8 @@ NAME '{WORD}
 
 PREFIXOP ("$+$"|"$-$"|"$*$"|"$/$"|"$mod$"|"$=$"|"$<>$"|"$<$"|"$>$"|"$<=$"|"$>=$"|"$@$"|"$times$"|"$and$"|"$or$"|"$xor$"|"$land$"|"$lor$"|"$lxor$"|"$lsl$"|"$lsr$"|"+$"|"-$"|"not$"|"lnot$"|"reverse$")
 
+PRAGMA (#{ALPHANUMERIC}+|"#pragma "{CHARACTER}*" #end")
+
 %x COMMENT
 
 %%
@@ -201,6 +203,8 @@ xor {
 }
 
 "--".* /* eat up single line comments */
+
+{PRAGMA} printf("PRAGMA: %s\n", yytext);
 
 [ \t\r\n\f]+ /* eat up whitespace */
 
