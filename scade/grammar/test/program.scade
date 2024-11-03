@@ -1,0 +1,40 @@
+package P1
+  package public P2
+    type 
+    T1 = bool;
+    T1 = int8;
+    T1 = int16;
+    T1 = int32;
+    T1 = int64;
+    T1 = uint8;
+    T1 = uint16;
+    T1 = uint32;
+    T1 = uint64;
+    T1 = float32;
+    T1 = float64;
+    T1 = char;
+    T2 = int8 is integer;
+    T3 = enum { YELLOW, BLUE };
+    T4 = P4::T_NAME;
+    T5 = 'TVAR;
+    T6 = {m1: int8, m2: float32};
+    T7 = uint32 ^ SIZE;
+
+    const
+    C1 : int8 = SIZE;
+    C2 : int32;
+
+    sensor
+    S1, S2, S3 : int8;
+    S5: int32;
+
+    function operator1 (a: int8; b: int32) returns (c: bool)
+    let
+      c = a;
+      c = ture;
+      c = false;
+      c = 'a';
+      c = 42;
+    tel
+  end;
+end;
