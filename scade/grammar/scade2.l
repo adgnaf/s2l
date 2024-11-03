@@ -55,7 +55,17 @@ LEX_NAME '{WORD}
 "(" { return L_PARENTHESE; }
 ")" { return R_PARENTHESE; }
 "_" { return UNDERSCORE; }
-
+"->" { return ARROW_TO_RIGHT; }
+"-" { return MINUS; }
+"+" { return PLUS; }
+"*" { return MUL; }
+"/" { return DIV; }
+"<>" { return DIFF; }
+"<" { return LT; }
+">" { return GT; }
+"<=" { return LE; }
+">=" { return GE; }
+"#" { return SHARP; }
 
 abstract { return ABSTRACT; }
 open { return OPEN; }
@@ -105,6 +115,20 @@ let { return LET; }
 tel { return TEL; }
 true { return TRUE; }
 false { return FALSE; }
+pre { return PRE; }
+fby { return FBY; }
+times { return TIMES; }
+merge { return MERGE; }
+lnot { return LNOT; }
+mod { return MOD; }
+land { return LAND; }
+lor { return LOR; }
+lxor { return LXOR; }
+lsl { return LSL; }
+lsr { return LSR; }
+and { return AND; }
+or { return OR; }
+xor { return XOR; }
 
 {LEX_CHAR} { return CHAR; }
 

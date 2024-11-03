@@ -35,6 +35,13 @@ package P1
       c = false;
       c = 'a';
       c = 42;
+      c = pre a ;
+      c = a -> b;
+      c = fby (a; b; c);
+      c = a times b;
+      c = a when b ;
+      c = merge (a ; b);
+      c = a + b - a * b / a mod b;
     tel
   end;
 end;

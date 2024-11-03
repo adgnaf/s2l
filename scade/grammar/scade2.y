@@ -15,6 +15,17 @@
 %token L_PARENTHESE
 %token R_PARENTHESE
 %token UNDERSCORE
+%token ARROW_TO_RIGHT
+%token MINUS
+%token PLUS
+%token MUL
+%token DIV 
+%token DIFF
+%token LT
+%token GT
+%token LE
+%token GE
+%token SHARP
 
 %token ABSTRACT 
 %token OPEN
@@ -64,6 +75,20 @@
 %token TEL
 %token TRUE
 %token FALSE
+%token PRE
+%token FBY
+%token TIMES 
+%token MERGE
+%token LNOT
+%token MOD
+%token LAND
+%token LOR
+%token LXOR 
+%token LSL
+%token LSR 
+%token AND
+%token OR
+%token XOR 
 
 %token INTEGER 
 %token TYPED_INTEGER
@@ -406,7 +431,11 @@ clock_expr:
 expr:
     id_expr
     | atom 
-    
+    | list_expr 
+    | tempo_expr 
+    | arith_expr 
+    | relation_expr 
+    | bool_expr
     ;
 
 atom:
@@ -428,6 +457,85 @@ id_expr:
     | NAME
     | LAST NAME
     ;
+
+list_expr:
+    L_PARENTHESE list R_PARENTHESE
+    ;
+
+list:
+    %empty
+    | expr_list
+    ;
+
+expr_list:
+    expr
+    | expr_list COMMA expr 
+    ;
+
+tempo_expr:
+    PRE expr 
+    | expr ARROW_TO_RIGHT expr 
+    | FBY L_PARENTHESE list SEMICOLON expr SEMICOLON list R_PARENTHESE
+    | expr TIMES expr 
+    | expr WHEN clock_expr
+    | MERGE L_PARENTHESE expr SEMICOLON list_list R_PARENTHESE
+    ;
+
+list_list:
+    list
+    | list_list SEMICOLON list
+    ;
+
+arith_expr:
+    unary_arith_op expr
+    | expr bin_arith_op expr
+    | L_PARENTHESE expr COLON type_expr R_PARENTHESE
+    ;
+
+unary_arith_op:
+    MINUS
+    | PLUS
+    | LNOT
+    ;
+
+bin_arith_op:
+    PLUS
+    | MINUS
+    | MUL
+    | DIV
+    | MOD
+    | LAND 
+    | LOR 
+    | LXOR 
+    | LSL 
+    | LSR 
+    ;
+
+relation_expr:
+    expr bin_relation_op expr
+    ;
+
+bin_relation_op:
+    EQUAL
+    | DIFF
+    | LT 
+    | GT 
+    | LE 
+    | GE 
+    ;
+
+bool_expr:
+    NOT expr
+    | expr bin_bool_op expr 
+    | SHARP L_PARENTHESE list R_PARENTHESE
+    ;
+
+bin_bool_op:
+    AND 
+    | OR
+    | XOR
+    ;
+
 
 %%
 
