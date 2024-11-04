@@ -1,4 +1,9 @@
-/* flex rules for scade 6 */
+%{
+
+#include "stdio.h"
+#include "scade.tab.h"
+
+%}
 
 DIGIT2 [0-1]
 DIGIT8 [0-7]
@@ -10,30 +15,29 @@ INTEGER8 0{DIGIT8}+
 INTEGER10 (0|[1-9]{DIGIT10}*)
 INTEGER16 0x{DIGIT16}+
 
-INTEGER ({INTEGER2}|{INTEGER8}|{INTEGER10}|{INTEGER16})
+LEX_INTEGER ({INTEGER2}|{INTEGER8}|{INTEGER10}|{INTEGER16})
 
-TYPED_INTEGER INTEGER(_i | _ui)(8 | 16 | 32 | 64)
+LEX_TYPED_INTEGER INTEGER(_i|_ui)(8|16|32|64)
 
 EXPONENT [eE][+-]?{DIGIT10}+
-FLOAT ({DIGIT10}+\.{DIGIT10}*{EXPONENT}?|{DIGIT10}*\.{DIGIT10}+{EXPONENT}?)
+LEX_FLOAT ({DIGIT10}+\.{DIGIT10}*{EXPONENT}?|{DIGIT10}*\.{DIGIT10}+{EXPONENT}?)
 
-TYPED_FLOAT {FLOAT}(_f32|_f64)
+LEX_TYPED_FLOAT {LEX_FLOAT}(_f32|_f64)
 
 LETTER (_|[a-z]|[A-Z])
-
 ALPHANUMERIC ({DIGIT10}|{LETTER})
-
 WORD {LETTER}{ALPHANUMERIC}*
 
 CHARACTER ({ALPHANUMERIC}|[ \!"\$#%&'\(\)\*\+,-\.\/:;_<=>\?@\[\]\\\^`\|\{\}~])
 
-CHAR ('{CHARACTER}'|'\\x{DIGIT16}{DIGIT16}')
+LEX_CHAR ('{CHARACTER}'|'\\x{DIGIT16}{DIGIT16}')
 
-ID {WORD}
+LEX_ID {WORD}
+LEX_NAME '{WORD}
 
-NAME '{WORD}
 
-PREFIXOP ("$+$"|"$-$"|"$*$"|"$/$"|"$mod$"|"$=$"|"$<>$"|"$<$"|"$>$"|"$<=$"|"$>=$"|"$@$"|"$times$"|"$and$"|"$or$"|"$xor$"|"$land$"|"$lor$"|"$lxor$"|"$lsl$"|"$lsr$"|"+$"|"-$"|"not$"|"lnot$"|"reverse$")
+LEX_PREFIXOP ("$+$"|"$-$"|"$*$"|"$/$"|"$mod$"|"$=$"|"$<>$"|"$<$"|"$>$"|"$<=$"|"$>=$"|"$@$"|"$times$"|"$and$"|"$or$"|"$xor$"|"$land$"|"$lor$"|"$lxor$"|"$lsl$"|"$lsr$"|"+$"|"-$"|"not$"|"lnot$"|"reverse$")
+
 
 PRAGMA (#{ALPHANUMERIC}+|"#pragma "{CHARACTER}*" #end")
 
@@ -41,160 +45,152 @@ PRAGMA (#{ALPHANUMERIC}+|"#pragma "{CHARACTER}*" #end")
 
 %%
 
-{INTEGER} {
-    printf("INTEGER: %s\n", yytext);
-} 
+{LEX_INTEGER} { return INTEGER; }
+{LEX_TYPED_INTEGER} { return TYPED_INTEGER; }
+{LEX_FLOAT} { return FLOAT; }
+{LEX_TYPED_FLOAT} { return TYPED_FLOAT; }
 
-{FLOAT} {
-    printf("FLOAT: %s\n", yytext);
+"::" { return DOUBLE_COLON; }
+";" { return SEMICOLON; }
+"=" { return EQUAL; }
+"<<" { return DOUBLE_LT; }
+">>" { return DOUBLE_GT; }
+"," { return COMMA; }
+"{" { return L_BRACE; }
+"}" { return R_BRACE; }
+":" { return COLON; }
+"^" { return CARET; }
+"(" { return L_PARENTHESE; }
+")" { return R_PARENTHESE; }
+"_" { return UNDERSCORE; }
+"->" { return ARROW_TO_RIGHT; }
+"-" { return MINUS; }
+"+" { return PLUS; }
+"*" { return MUL; }
+"/" { return DIV; }
+"<>" { return DIFF; }
+"<" { return LT; }
+">" { return GT; }
+"<=" { return LE; }
+">=" { return GE; }
+"#" { return SHARP; }
+"@" { return CONCAT; }
+"[" { return L_S_BRACKET; }
+"]" { return R_S_BRACKET; }
+".." { return DOUBLE_DOT; }
+"." { return DOT; }
+"|" { return VERTICAL_BAR; }
+
+{LEX_PREFIXOP} { return PREFIXOP; }
+
+abstract { return ABSTRACT; }
+open { return OPEN; }
+package { return PACKAGE; }
+private { return PRIVATE; }
+public { return PUBLIC; }
+end { return END; }
+type { return TYPE; }
+imported { return IMPORTED; }
+bool { return BOOL; }
+signed { return SIGNED; }
+int8 { return INT8; }
+int16 { return INT16; }
+int32 { return INT32; }
+int64 { return INT64; }
+unsigned { return UNSIGNED; }
+uint8 { return UINT8; }
+uint16 { return UINT16; }
+uint32 { return UINT32; }
+uint64 { return UINT64; }
+float32 { return FLOAT32; }
+float64 { return FLOAT64; }
+char { return CHAR_TYPE; }
+is { return IS; }
+numeric { return NUMERIC; }
+float { return FLOAT_SYM; }
+integer { return INTEGER_SYM; }
+enum { return ENUM; }
+last { return LAST; }
+const { return CONST; }
+sensor { return SENSOR; }
+clock { return CLOCK; }
+probe { return PROBE; }
+default { return DEFAULT; }
+not { return NOT; }
+when { return WHEN; }
+function { return FUNCTION; }
+node { return NODE; }
+returns { return RETURNS; }
+where { return WHERE; }
+specialize { return SPECIALIZE; }
+assume { return ASSUME; }
+guarantee { return GUARANTEE; }
+sig { return SIG; }
+var { return VAR; }
+let { return LET; }
+tel { return TEL; }
+true { return TRUE; }
+false { return FALSE; }
+pre { return PRE; }
+fby { return FBY; }
+times { return TIMES; }
+merge { return MERGE; }
+lnot { return LNOT; }
+mod { return MOD; }
+land { return LAND; }
+lor { return LOR; }
+lxor { return LXOR; }
+lsl { return LSL; }
+lsr { return LSR; }
+and { return AND; }
+or { return OR; }
+xor { return XOR; }
+reverse { return REVERSE; }
+transpose { return TRANSPOSE; }
+with { return WITH; }
+if { return IF; }
+then { return THEN; }
+else { return ELSE; }
+case { return CASE; }
+of { return OF; }
+make { return MAKE; }
+flatten { return FLATTEN; }
+map { return MAP; }
+fold { return FOLD; }
+mapi { return MAPI; }
+foldi { return FOLDI; }
+mapfold { return MAPFOLD; }
+mapfoldi { return MAPFOLDI; }
+mapw { return MAPW; }
+mapwi { return MAPWI; }
+mapfoldw { return MAPFOLDW; }
+mapfoldwi { return MAPFOLDWI; }
+activate { return ACTIVATE; }
+every { return EVERY; }
+match { return MATCH; }
+initial { return INITIAL; }
+restart { return RESTART; }
+foldw { return FOLDW; }
+foldwi { return FOLDWI; }
+emit { return EMIT; }
+automaton { return AUTOMATON; }
+final { return FINAL; }
+state { return STATE; }
+unless { return UNLESS; }
+resume { return RESUME; }
+do { return DO; }
+elsif { return ELSIF; }
+until { return UNTIL; }
+synchro { return SYNCHRO; }
+
+
+{LEX_CHAR} { return CHAR; }
+
+{LEX_ID} { 
+    return ID;
 }
 
-"<>" |
-"<=" |
-">=" |
-"<<" |
-">>" |
-"=" |
-"<" |
-">" |
-"(" |
-")" |
-"[" |
-"]" |
-"{" |
-"}" |
-"->" |
-"::" |
-".." |
-";" |
-"," |
-"." |
-":" |
-"^" |
-"@" |
-"#" |
-"_" |
-"|" |
-"+" |
-"-" |
-"*" |
-"/" {
-    printf("Symbol List - lexeme: %s\n", yytext);
-}
-
-{PREFIXOP} printf("Symbol List - PREFIXOP: %s\n", yytext);
-
-abstract | 
-activate | 
-and | 
-assume |
-automaton |
-bool |
-case |
-char |
-clock |
-const |
-default |
-do |
-else |
-elsif |
-emit |
-end |
-enum |
-every |
-flase |
-fby |
-final |
-flatten |
-float |
-float32 |
-float64 |
-fold |
-foldi |
-foldw |
-foldwi |
-function |
-guarantee |
-group |
-if |
-imported |
-initial |
-int8 |
-int16 |
-int32 |
-int64 |
-integer |
-is |
-land |
-last |
-let |
-lnot |
-lor |
-lsl |
-lsr |
-lxor |
-make |
-map |
-mapfold |
-mapfoldi |
-mapfoldw |
-mapfoldwi |
-mapi |
-mapw |
-mapwi |
-match |
-merge |
-mod |
-node |
-not |
-numeric |
-of |
-onreset |
-open |
-or |
-package |
-parameter |
-pre |
-private |
-probe |
-public |
-restart |
-resume |
-returns |
-reverse |
-sensor |
-sig |
-signed |
-specialize |
-state |
-synchro |
-tel |
-then |
-times |
-transpose |
-true |
-type |
-uint8 |
-uint16 |
-uint32 |
-uint64 |
-unless |
-unsigned |
-until |
-var |
-when |
-where |
-with |
-xor {
-    printf("Keyword: %s\n", yytext);
-}
-
-{CHAR} printf("CHAR: %s\n", yytext);
-
-{ID} printf("ID: %s\n", yytext);
-
-{NAME} printf("NAME: %s\n", yytext);
-
+{LEX_NAME} { return NAME; }
 
 "/*" { BEGIN(COMMENT); }
 <COMMENT>{
@@ -211,12 +207,3 @@ xor {
 . printf("Unrecognized character: %s\n", yytext);
 
 %%
-
-int main(int argc, char **argv) {
-    if (argc > 1) {
-        yyin = fopen(argv[1], "r");
-    } else {
-        yyin = stdin;
-    }
-    yylex();
-}

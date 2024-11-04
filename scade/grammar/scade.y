@@ -893,7 +893,11 @@ int main(int argc, char **argv) {
         yyin = stdin;
     }
     int res = yyparse();
-    printf("Result of yyparse is %d\n", res);
+    if (!res) {
+        printf("Scade program parsed successfully!\n");
+    } else {
+        printf("Syntax error.\n");
+    }
     return 0;
 }
 

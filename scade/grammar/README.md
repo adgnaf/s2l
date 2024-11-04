@@ -1,20 +1,11 @@
 # flex/bison rules for Scade 6
 
-## flex rules 
+* `scade.l` is flex rules for Scade 6. 
+* `scade.y` is bison rules for Scade 6.
 
-`scade.l` is flex rules for Scade 6. 
-
-### Usage 
-
-Generate lexer.
+## Usage 
 
 ```bash
-flex scade.l
-gcc -o lexer lex.yy.c -lfl
-```
-
-Test tokens.
-
-```bash
-./lexer test/test.txt
+make 
+./a.out test/program.scade
 ```

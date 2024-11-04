@@ -1,4 +1,4 @@
 all:
-	flex scade2.l
-	bison -d scade2.y
-	gcc -o a.out lex.yy.c scade2.tab.c -lfl
+	flex scade.l
+	bison -d scade.y
+	gcc -o a.out lex.yy.c scade.tab.c -lfl
