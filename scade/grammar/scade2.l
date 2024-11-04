@@ -35,6 +35,10 @@ LEX_CHAR ('{CHARACTER}'|'\\x{DIGIT16}{DIGIT16}')
 LEX_ID {WORD}
 LEX_NAME '{WORD}
 
+
+LEX_PREFIXOP ("$+$"|"$-$"|"$*$"|"$/$"|"$mod$"|"$=$"|"$<>$"|"$<$"|"$>$"|"$<=$"|"$>=$"|"$@$"|"$times$"|"$and$"|"$or$"|"$xor$"|"$land$"|"$lor$"|"$lxor$"|"$lsl$"|"$lsr$"|"+$"|"-$"|"not$"|"lnot$"|"reverse$")
+
+
 %%
 
 {LEX_INTEGER} { return INTEGER; }
@@ -66,6 +70,14 @@ LEX_NAME '{WORD}
 "<=" { return LE; }
 ">=" { return GE; }
 "#" { return SHARP; }
+"@" { return CONCAT; }
+"[" { return L_S_BRACKET; }
+"]" { return R_S_BRACKET; }
+".." { return DOUBLE_DOT; }
+"." { return DOT; }
+"|" { return VERTICAL_BAR; }
+
+{LEX_PREFIXOP} { return PREFIXOP; }
 
 abstract { return ABSTRACT; }
 open { return OPEN; }
@@ -129,6 +141,44 @@ lsr { return LSR; }
 and { return AND; }
 or { return OR; }
 xor { return XOR; }
+reverse { return REVERSE; }
+transpose { return TRANSPOSE; }
+with { return WITH; }
+if { return IF; }
+then { return THEN; }
+else { return ELSE; }
+case { return CASE; }
+of { return OF; }
+make { return MAKE; }
+flatten { return FLATTEN; }
+map { return MAP; }
+fold { return FOLD; }
+mapi { return MAPI; }
+foldi { return FOLDI; }
+mapfold { return MAPFOLD; }
+mapfoldi { return MAPFOLDI; }
+mapw { return MAPW; }
+mapwi { return MAPWI; }
+mapfoldw { return MAPFOLDW; }
+mapfoldwi { return MAPFOLDWI; }
+activate { return ACTIVATE; }
+every { return EVERY; }
+match { return MATCH; }
+initial { return INITIAL; }
+restart { return RESTART; }
+foldw { return FOLDW; }
+foldwi { return FOLDWI; }
+emit { return EMIT; }
+automaton { return AUTOMATON; }
+final { return FINAL; }
+state { return STATE; }
+unless { return UNLESS; }
+resume { return RESUME; }
+do { return DO; }
+elsif { return ELSIF; }
+until { return UNTIL; }
+synchro { return SYNCHRO; }
+
 
 {LEX_CHAR} { return CHAR; }
 

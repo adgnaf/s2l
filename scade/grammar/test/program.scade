@@ -42,6 +42,14 @@ package P1
       c = a when b ;
       c = merge (a ; b);
       c = a + b - a * b / a mod b;
+      c = reverse a;
+      c = a @ b;
+      c = a[3];
+      c = a[1 .. 2];
+      c = transpose (a; 1;3);
+      c = a^b;
+
+
     tel
   end;
 end;
