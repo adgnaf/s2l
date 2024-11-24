@@ -1,4 +1,9 @@
+TARGET = scade_parser
+
 all:
-	flex scade.l
-	bison -d scade.y
-	gcc -o a.out lex.yy.c scade.tab.c -lfl
+	gcc -o $(TARGET) lex.yy.c scade.tab.c -lfl
+
+clean:
+	rm -f $(TARGET) 
+
+.PHONY: all clean 

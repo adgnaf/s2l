@@ -7,5 +7,14 @@
 
 ```bash
 make 
-./a.out test/program.scade
+./scade_parser test/program.scade
+```
+
+## Misc 
+
+Generate lexer and parser 
+
+```bash
+flex scade.l
+bison -d scade.y
 ```
