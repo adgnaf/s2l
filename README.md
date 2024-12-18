@@ -1,2 +1,3 @@
-# s2l
-Scade to Lustre-v6
+# synchroneLang 
+
+Synchronous programming language experiments.
